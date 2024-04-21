@@ -1,0 +1,1704 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+   
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+ <style>
+    /* Add your styles here */
+    
+
+
+.product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+    
+
+
+
+
+
+
+.cart-sidebar {
+      width: 200px;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      right: -250px;
+      background-color: #f4f4f4;
+      padding: 20px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+  z-index:1;
+  }
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+.slider {
+  /* line them up horizontally */
+  display: flex;
+
+  /* allow for scrolling */
+  overflow-x: auto;
+
+  /* make it smooth on iOS */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-points-x: repeat(300px);
+  scroll-snap-type: mandatory;
+}
+.
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Add your styles here */
+
+/* Styles for product container */
+.product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+.product button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product button:hover {
+  background-color: #2980b9;
+}
+
+/* Styles for product images */
+
+
+
+
+
+
+
+
+
+.close-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+}
+
+
+
+
+
+
+
+.cart-product-image {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.quantity-selector {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 10px;
+margin-left:10px;
+}
+
+.remove-button {
+    background-color: #f44336;
+    color: black;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 70px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 70px;
+}
+
+.remove-button:hover {
+    background-color: #d32f2f;
+}</style>
+
+
+<style>
+
+/* Style for the total amount */
+#totalAmount {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Style for the checkout button */
+
+
+
+/* Style for the checkout button */
+.checkout-btn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #219a52;
+}
+
+
+
+
+button:hover {
+  background-color: #219a52;
+}
+/* Style for the Shopping Cart title */
+.cart-sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+</style>
+
+
+ <style>
+
+/* Google Fonts - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  min-height: 100%;
+  background: #e3f2fd;
+}
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 105px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+z-index: 1;
+}
+nav .logo {
+  display: flex;
+  align-items: center;
+  margin: 0 24px;
+}
+.logo .menu-icon {
+  color: #333;
+  font-size: 24px;
+  margin-right: 14px;
+  cursor: pointer;
+}
+.logo .logo-name {
+  color: #333;
+  font-size: 22px;
+  font-weight: 500;
+}
+nav .sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 200px;
+  padding: 20px 0;
+  background-color: #fff;
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+nav.open .sidebar {
+  left: 0;
+}
+.sidebar .sidebar-content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 16px;
+}
+.sidebar-content .list {
+  list-style: none;
+}
+.list .nav-link {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  padding: 14px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.lists .nav-link:hover {
+  background-color: #4070f4;
+}
+.nav-link .icon {
+  margin-right: 14px;
+  font-size: 20px;
+  color: #707070;
+}
+.nav-link .link {
+  font-size: 16px;
+  color: #707070;
+  font-weight: 400;
+}
+.lists .nav-link:hover .icon,
+.lists .nav-link:hover .link {
+  color: #fff;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 1000vh;
+  width: 200%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  background: rgba(0, 0, 0, 0.3);
+}
+nav.open ~ .overlay {
+  opacity: 1;
+  left: 200px;
+  pointer-events: auto;
+}
+
+/* Add this to your CSS */
+.cart-icon {
+    position: fixed;
+    top: 25px;
+    right: 20px;
+  
+  cursor: pointer;
+}
+
+
+
+.remove-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size:20px;
+margin-left:40px;
+cursor: pointer; /* Maintain pointer cursor for interaction */
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.search {
+  margin: 20px;
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  color: black;
+  padding: 10px;
+ 
+
+
+
+
+
+ position: absolute;
+  top: 10px; /* Adjust this value to position the search container from the top */
+  right: 40px; /* Adjust this value to position the search container from the right */
+  /* Other styles remain unchanged */
+ border-radius: 40px;
+}
+
+.search :is(input, button) {
+  color: inherit;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 20px;
+}
+
+.search__input {
+  width: 0;
+  transition: width 0.5s;
+}
+
+.search__button {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.search__button:hover {
+  color: #e3e3e3;
+}
+
+.search:focus-within input {
+  width: 180px;
+}
+
+::placeholder {
+  font: inherit;
+
+
+
+
+
+
+</style>
+
+
+<style>
+    /* Add your styles here */
+   .flippable {
+      perspective: 1000px;
+      transition: transform 0.5s;
+    }
+
+    .flippable.clicked {
+      transform-style: preserve-3d;
+      transform: rotateY(180deg);
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider {
+      /* line them up horizontally */
+      display: flex;
+
+      /* allow for scrolling */
+      overflow-x: auto;
+
+      /* make it smooth on iOS */
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-points-x: repeat(300px);
+      scroll-snap-type: mandatory;
+    }
+
+    
+    .front,
+    .back {
+      backface-visibility: hidden;
+    }
+
+
+.back {
+      transform: rotateY(180deg);
+    }
+
+  </style>
+
+
+
+
+
+
+
+
+
+
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"rel="stylesheet" />
+
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+<nav>
+      <div class="logo">
+
+
+
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name"></span>
+
+
+<img src="https://i.ibb.co/Fsw5cyG/IMG-20231117-221110.jpg" width="200" height="50" >
+     
+
+
+<div class="text-white col text-center">
+    <form class="search">
+      
+
+<input type="text" id="searchInput" class="search__input text-white" placeholder="Search...." />
+
+
+      <button type="button" class="search__button">
+       <i class='bx bx-search search-icon' onclick="searchProducts()"></i>
+      </button>
+    </form>
+  </div>
+
+
+
+
+<div class="cart-icon" onclick="openCart()" style=font-size:20px;top:44px>
+  <i class="bx bx-cart icon"></i>  
+</div>
+
+
+
+
+
+ 
+      <div class="sidebar">
+
+<div class="logo">
+<span class="logo-name">My Store</span>
+
+
+
+
+
+</div>
+
+
+
+
+
+        
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx-bar- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu </span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+          </ul>
+
+          <div class="bottom-cotent">
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="#" class="nav-link">
+                <i class="bx bx- icon"></i>
+                <span class="link">Menu</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    
+</nav>
+
+<div id="searchResult"></div>
+
+
+<div class ="slider">
+
+
+
+
+<img src="https://i.ibb.co/Q8vvGmS/Screenshot-2023-11-17-20-30-48-39-40deb401b9ffe8e1df2f1cc5a480b12.jpg             " at="Description of image" width="460" height="350" style="margin-left: 0px; margin-top: 120px;">
+
+<img src="htps://i.ibb.co/Q8vvGmS/Screenshot-2023-11-17-20-30-48-39-40deb401b9ffe8e1df2fcc5ba480b12.jpg             " at="Description of image" width="560" height="350" style="margin-left: 70px; margin-top: 120px; ">
+
+<img src="htps://i.ibb.co/Q8vvGmS/Screenshot-2023-11-17-20-30-48-39-40deb401b9ffe8e1df2f1c5ba480b12.jpg             " lt="Description of image" width="560" height="350" style="margin-left: 70px; margin-top: 120px; ">
+
+<img src="htps://i.ibb.co/Q8vvGmS/Screenshot-2023-11-17-20-30-48-39-40deb401b9ffe8e1df2f1cc5ba480b12.jpg             " at="" width="560" height="350" style="margin-left: 70px; margin-top: 120px; ">
+
+</div>
+
+
+<h5 style="font-size: 24px; margin-top: 100px; margin-right:10px; margin-left:60px">Featured Products</h5>
+<div class="slider">
+   
+
+
+
+
+
+
+
+
+ <div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+     <div class="front">
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+     <div class="front">
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 2</h3>
+            <p>$80</p>
+       </div>     
+<button onclick="addToCart('Product 1', 80, 'product1.jpg')">Add to Cart</button>
+    </div>    
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+    <div class="front"> 
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 3</h3>
+            <p>$70</p>
+       </div>     
+<button onclick="addToCart('Product 1', 70, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+   <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 4</h3>
+            <p>$90</p>
+       </div>     
+<button onclick="addToCart('Product 1', 90, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+   <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 5</h3>
+            <p>$40</p>
+       </div>     
+<button onclick="addToCart('Product 1', 40, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+
+
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+     <div class="front"> 
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 6</h3>
+            <p>$30</p>
+       </div>     
+<button onclick="addToCart('Product 1', 30, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 style="font-size: 24px; margin-top: 100px; margin-right:10px; margin-left:60px">Latest Products</h5>
+
+
+
+<div class="slider">
+   
+
+
+
+
+
+
+
+
+ <div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+     <div class="front">
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+     <div class="front">
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 2</h3>
+            <p>$80</p>
+       </div>     
+<button onclick="addToCart('Product 1', 80, 'product1.jpg')">Add to Cart</button>
+    </div>    
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+    <div class="front"> 
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 3</h3>
+            <p>$70</p>
+       </div>     
+<button onclick="addToCart('Product 1', 70, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+   <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 4</h3>
+            <p>$90</p>
+       </div>     
+<button onclick="addToCart('Product 1', 90, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+   <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 5</h3>
+            <p>$40</p>
+       </div>     
+<button onclick="addToCart('Product 1', 40, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+
+
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+     <div class="front"> 
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 6</h3>
+            <p>$30</p>
+       </div>     
+<button onclick="addToCart('Product 1', 30, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+<div class = "product flippable" style="margin-top: 40px; margin-bottom: px;">
+  <div class="front">   
+<div style=" width: 200px; height: 250px; padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 7</h3>
+            <p>$50</p>
+       </div>     
+<button onclick="addToCart('Product 1', 50, 'product1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+<h5 style="font-size: 24px; margin-top: 100px; margin-right:10px; margin-left:60px">All Products</h5>
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class = "product flippable" style="margin-left: 60px; margin-bottom: px;width: 230px; height: 330px;">
+     <div class="front">
+<div style="  padding: 20px; ; text-align: center;">
+    <img src="" width="150" height="170" >
+     
+       <h3>Product 1</h3>
+            <p>$20</p>
+       </div>     
+<button onclick="addToCart('Product 1', 20, 'produt1.jpg')">Add to Cart</button>
+    </div>    
+
+<div class="back">
+      hi <!-- Back content for Product 1 -->
+    </div>
+
+</div>
+</div>
+
+<div class="cart-sidebar" id="cartSidebar">
+    <span class="close-btn" onclick="closeCart()">×</span>
+    <h2>Shopping Cart</h2>
+    <div id="cartContent">
+        <!-- Cart content will be dynamically updated here -->
+    </div>
+    <div>
+        <h3>Total: <span id="totalAmount">$0.00</span></h3>
+        
+    <button onclick="checkout()" class="checkout-btn">Checkout</button>
+</div>
+</div>
+
+
+
+
+
+
+
+
+    <section class="overlay">
+
+
+
+  <i class="bx bx-x x-icon" style="font-size: 28px;"></i>
+  
+</section>
+
+<footer class="footer">
+     <div class="container">
+      <div class="row">
+        <div class="footer-col">
+          <h4>company</h4>
+          <ul>
+            <li><a href="#">about us</a></li>
+            <li><a href="#">our services</a></li>
+            <li><a href="#">privacy policy</a></li>
+            <li><a href="#">affiliate program</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>get help</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">shipping</a></li>
+            <li><a href="#">returns</a></li>
+            <li><a href="#">order status</a></li>
+            <li><a href="#">payment options</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>online shop</h4>
+          <ul>
+            <li><a href="#">watch</a></li>
+            <li><a href="#">bag</a></li>
+            <li><a href="#">shoes</a></li>
+            <li><a href="#">dress</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>follow us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+     </div>
+  </footer>
+
+
+
+
+
+<style>
+
+HTML CSS Result Skip Results Iframe
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body{
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+}
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.container{
+  max-width: 1170px;
+  margin:auto;
+}
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+ul{
+  list-style: none;
+}
+.footer{
+  background-color: #24262b;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+  font-size: 18px;
+  color: #ffffff;
+  text-transform: capitalize;
+  margin-bottom: 35px;
+  font-weight: 500;
+  position: relative;
+}
+.footer-col h4::before{
+  content: '';
+  position: absolute;
+  left:0;
+  bottom: -10px;
+  background-color: #e91e63;
+  height: 2px;
+  box-sizing: border-box;
+  width: 50px;
+}
+.footer-col ul li:not(:last-child){
+  margin-bottom: 10px;
+}
+.footer-col ul li a{
+  font-size: 16px;
+  text-transform: capitalize;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 300;
+  color: #bbbbbb;
+  display: block;
+  transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+  color: #ffffff;
+  padding-left: 8px;
+}
+.footer-col .social-links a{
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-color: rgba(255,255,255,0.2);
+  margin:0 10px 10px 0;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+  color: #24262b;
+  background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+</style>
+
+<script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function removeSearchedProduct(button) {
+    const productDiv = button.parentNode;
+    productDiv.remove();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function searchProducts() {
+    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+    const products = document.querySelectorAll('.product');
+    const searchResult = document.getElementById('searchResult');
+    searchResult.innerHTML = ''; // Clear previous search results
+
+    if (searchValue.length >= 5) {
+        const matchedProducts = {}; // Object to store matched products
+
+        products.forEach(product => {
+            const productName = product.querySelector('h3').textContent.toLowerCase();
+
+            if (productName.includes(searchValue) && !matchedProducts[productName]) {
+                matchedProducts[productName] = true; // Set the matched product as found
+
+                const matchedProduct = product.cloneNode(true); // Clone the product element
+
+                // Style for the matched product
+                matchedProduct.style.display = 'inline-block';
+                matchedProduct.style.border = '1px solid #ccc';
+                matchedProduct.style.padding = '10px';
+                matchedProduct.style.marginBottom = '10px';
+                matchedProduct.style.width = '220px';
+                matchedProduct.style.marginLeft = '70px';
+                matchedProduct.style.marginTop = '100px';
+
+                // Position the Remove icon
+                const removeButton = document.createElement('i');
+                removeButton.className = 'bx bx-x';
+                removeButton.style.cursor = 'pointer';
+                removeButton.setAttribute('data-boxicon-size', 'small');
+
+                // Styling for the Remove icon within the matched product
+                removeButton.style.position = 'absolute';
+                removeButton.style.top = '0px';
+                removeButton.style.right = '0px';
+                removeButton.style.color = 'black';
+                removeButton.style.fontSize = '30px';
+
+                removeButton.onclick = function () {
+                    removeSearchedProduct(this);
+                };
+
+                // Append the styled Remove icon to the matched product
+                matchedProduct.appendChild(removeButton);
+
+                // Append the styled matched product to the search results
+                searchResult.appendChild(matchedProduct);
+            }
+        });
+
+        // If no matched products found, display a message
+        if (Object.keys(matchedProducts).length === 0) {
+            const noResultMessage = document.createElement('p');
+            noResultMessage.textContent = 'No search result found.';
+            // Style the message if needed
+            noResultMessage.style.color = 'black'; // Example: Change text color
+            noResultMessage.style.fontWeight = 'bold'; // Example: Apply bold font
+            noResultMessage.style.marginTop = '100px'; // Example: Apply margin top
+
+            // Append the message to the search results container
+            searchResult.appendChild(noResultMessage);
+
+            // Set a timeout to remove the message after 5 seconds
+            setTimeout(function() {
+                searchResult.removeChild(noResultMessage);
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+    } else {
+        const inputLengthMessage = document.createElement('p');
+        inputLengthMessage.textContent = 'Please enter at least 5 characters for search.';
+        // Style the message if needed
+        inputLengthMessage.style.color = 'orange'; // Example: Change text color
+
+        // Append the message to the search results container
+        searchResult.appendChild(inputLengthMessage);
+    }
+}
+
+let total = 0; // Initialize total amount
+
+    function addToCart(productName, price, imageUrl) {
+        const quantitySelector = document.createElement('select'); // Create a quantity selector
+        for (let i = 1; i <= 10; i++) { // Example: Maximum quantity allowed is 10
+            const option = document.createElement('option');
+            option.value = i;
+            option.text = i;
+          
+
+
+
+quantitySelector.classList.add('quantity-selector'); // Add a class to the quantity selector
+
+;  quantitySelector.appendChild(option);
+        }
+
+        quantitySelector.addEventListener('change', function() {
+            const newQuantity = parseInt(quantitySelector.value);
+            const oldQuantity = parseInt(quantitySelector.dataset.oldValue || 1);
+            const quantityDifference = newQuantity - oldQuantity;
+
+            total += price * quantityDifference;
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+
+            quantitySelector.dataset.oldValue = newQuantity;
+        });
+
+        const productImage = document.createElement('img');
+productImage.src = imageUrl;
+productImage.alt = productName;
+productImage.classList.add('cart-product-image'); // Add a class to control the size
+
+        const productDiv = document.createElement('div');
+        productDiv.innerHTML = `<p>${productName} - $${price}</p>`;
+        productDiv.appendChild(productImage);
+        productDiv.appendChild(quantitySelector);
+
+        const removeButton = document.createElement('button');
+        removeButton.innerHTML = '       <i class="fa-solid fa-trash"></i>'; // Assuming the class 'bx-trash' corresponds to the trash icon in Boxicons and 'bx-sm' represents a small size
+removeButton.classList.add('remove-icon'); // Add a class to style the button
+        removeButton.onclick = function () {
+            removeProduct(this, price);
+        };
+
+        productDiv.appendChild(removeButton);
+
+        document.getElementById('cartContent').appendChild(productDiv);
+
+        const quantity = parseInt(quantitySelector.value);
+        total += price * quantity;
+        document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+
+        openCart();
+    }
+
+    function removeProduct(element, price) {
+        const productDiv = element.parentNode;
+        productDiv.remove();
+
+        const quantitySelector = productDiv.querySelector('select');
+        const quantity = parseInt(quantitySelector.value);
+        total -= price * quantity;
+        document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+    }
+
+    function openCart() {
+        document.getElementById('cartSidebar').style.right = '0';
+    }
+
+    function closeCart() {
+        document.getElementById('cartSidebar').style.right = '-300px';
+    }
+
+    function checkout() {
+        alert('Checkout completed! Thank you for shopping!');
+    }
+
+
+
+
+removeButton.classList.add('remove-button')
+
+
+
+
+</script>
+
+
+
+
+
+<script>
+
+
+const navBar = document.querySelector("nav"),
+       menuBtns = document.querySelectorAll(".menu-icon"),
+       overlay = document.querySelector(".overlay");
+
+     menuBtns.forEach((menuBtn) => {
+       menuBtn.addEventListener("click", () => {
+         navBar.classList.toggle("open");
+       });
+     });
+
+     overlay.addEventListener("click", () => {
+       navBar.classList.remove("open");
+     });
+
+
+const closeBtn = document.querySelector(".x-icon");
+
+closeBtn.addEventListener("click", () => {
+  navBar.classList.remove("open");
+});
+
+
+</script>
+<script>
+  const products = document.querySelectorAll('.flippable');
+
+  products.forEach(product => {
+    product.addEventListener('click', () => {
+      product.classList.toggle('clicked');
+    });
+  });
+</script>
+
+
+</body>
+</html>
